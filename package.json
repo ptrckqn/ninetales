@@ -1,0 +1,26 @@
+{
+  "name": "ninetales",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptrckqn/ninetales.git"
+  },
+  "author": "@ptrckqn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ptrckqn/ninetales/issues"
+  },
+  "homepage": "https://github.com/ptrckqn/ninetales#readme",
+  "dependencies": {
+    "next": "^10.0.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
