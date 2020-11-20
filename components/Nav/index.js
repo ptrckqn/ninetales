@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Nav = () => {
   return (
-    <div className="p-2 px-4 fixed w-full bg-gray-900 flex justify-between items-center h-14 text-gray-50">
+    <div className="p-2 px-4 fixed w-full bg-gray-600 flex justify-between items-center h-14 text-gray-50">
       <Link href="/">
         <img src="/svg/logo-full.svg" className="h-full" />
       </Link>
