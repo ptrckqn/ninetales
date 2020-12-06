@@ -4,7 +4,17 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ["montserrat"],
+      serif: ["playfair-display"],
+    },
+    extend: {
+      colors: {
+        "orange-main": "#F78F32",
+        "orange-light": "#FCBD26",
+        "orange-dark": "F04F2F",
+      },
+    },
   },
   variants: {
     extend: {},

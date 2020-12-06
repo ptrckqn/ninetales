@@ -1,6 +1,21 @@
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-bg {
+  width: 150%;
+  max-width: none;
+  filter: grayscale(100%) opacity(25%);
+  transform: rotate(20deg) translateX(-23%);
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;
