@@ -1,5 +1,4 @@
 import "typeface-montserrat";
-import "typeface-playfair-display";
 import "../styles/tailwind.css";
 
 const App = ({ Component, pageProps }) => {

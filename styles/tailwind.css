@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "New York Large";
+  src: url("/fonts/NewYorkLarge-Black.otf");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
@@ -14,6 +22,27 @@
   max-width: none;
   filter: grayscale(100%) opacity(25%);
   transform: rotate(20deg) translateX(-23%);
+}
+
+.max-h-screen-3\/4 {
+  max-height: 75vh;
+}
+
+.frosted {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(75, 85, 99, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.loading-wrapper div:nth-child(1) {
+  animation-delay: -0.66s;
+}
+
+.loading-wrapper div:nth-child(3) {
+  animation-delay: 0.66s;
 }
 
 /* purgecss end ignore */

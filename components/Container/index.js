@@ -3,9 +3,10 @@ import Dock from "../Dock";
 
 const Container = ({ showBack, children }) => {
   return (
-    <div className="container flex flex-col overflow-x-hidden min-h-screen p-4">
+    <div className="relative container flex flex-col overflow-x-hidden min-h-screen pt-2">
       <Nav showBack={showBack} />
-      {children}
+      <main className="mt-12 mb-16 safe-top">{children}</main>
+
       <Dock />
     </div>
   );

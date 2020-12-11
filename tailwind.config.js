@@ -5,8 +5,8 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ["montserrat"],
-      serif: ["playfair-display"],
+      sans: ["montserrat", "sans-serif"],
+      serif: ["New York Large", "serif"],
     },
     extend: {
       colors: {

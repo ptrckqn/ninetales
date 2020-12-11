@@ -16,23 +16,25 @@ const Nav = ({ showBack }) => {
   const handleSearch = () => {};
 
   return (
-    <div className="flex justify-between items-baseline">
-      <div>
-        {showBack && (
-          <button className="mr-2" onClick={handleBack}>
-            <img src="/svg/chevron-left.svg" className="h-8" />
-          </button>
-        )}
-        <img src="/svg/ninetales-logo.svg" className="h-12" />
-      </div>
+    <div className="fixed top-0 w-full bg-gray-800  px-4 safe-top border-b-2 border-orange-main z-40">
+      <div className="flex justify-between items-center py-2">
+        <div className="flex">
+          {showBack && (
+            <button className="mr-2" onClick={handleBack}>
+              <img src="/svg/chevron-left.svg" className="h-8" />
+            </button>
+          )}
+          <img src="/svg/ninetales-logo.svg" className="h-10" />
+        </div>
 
-      <Link href="/s">
-        <a>
-          <button>
-            <img src="/svg/search.svg" className="h-8" />
-          </button>
-        </a>
-      </Link>
+        <Link href="/s">
+          <a>
+            <button>
+              <img src="/svg/search.svg" className="h-8" />
+            </button>
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };

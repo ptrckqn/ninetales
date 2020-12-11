@@ -10,7 +10,7 @@ const Dock = () => {
   }, [router]);
 
   return (
-    <div className="fixed w-screen bottom-0 left-0 bg-gray-600 rounded-t-lg safe-bottom">
+    <div className="fixed w-screen bottom-0 left-0 bg-gray-600 rounded-t-lg safe-bottom z-40">
       <div className="p-4 flex justify-around">
         <Link href="/">
           <a className="h-8">
