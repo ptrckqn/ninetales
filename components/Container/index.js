@@ -1,12 +1,11 @@
 import Nav from "../Nav";
 import Dock from "../Dock";
 
-const Container = ({ showBack, children }) => {
+const Container = ({ showBack, handleNext, nextBtn, children }) => {
   return (
     <div className="relative container flex flex-col overflow-x-hidden min-h-screen pt-2">
-      <Nav showBack={showBack} />
-      <main className="mt-12 mb-16 safe-top">{children}</main>
-
+      <Nav showBack={showBack} handleNext={handleNext} nextBtn={nextBtn} />
+      <main className="mt-12 mb-16 safe-top flex-grow h-full">{children}</main>
       <Dock />
     </div>
   );

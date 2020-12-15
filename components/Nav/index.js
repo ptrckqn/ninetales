@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Nav = ({ showBack }) => {
+const Nav = ({ showBack, handleNext, nextBtn }) => {
   const router = useRouter();
 
   const handleBack = () => {
@@ -27,13 +27,19 @@ const Nav = ({ showBack }) => {
           <img src="/svg/ninetales-logo.svg" className="h-10" />
         </div>
 
-        <Link href="/s">
-          <a>
-            <button>
-              <img src="/svg/search.svg" className="h-8" />
-            </button>
-          </a>
-        </Link>
+        {nextBtn ? (
+          <button className="text-white font-bold " onClick={handleNext}>
+            {nextBtn}
+          </button>
+        ) : (
+          <Link href="/s">
+            <a>
+              <button>
+                <img src="/svg/search.svg" className="h-8" />
+              </button>
+            </a>
+          </Link>
+        )}
       </div>
     </div>
   );

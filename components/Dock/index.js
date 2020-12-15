@@ -22,9 +22,13 @@ const Dock = () => {
 
         <Link href="/upload">
           <a className="h-8 -mt-2">
-            <div className="h-12 w-12 rounded-full bg-gray-400 flex justify-center items-center">
+            <div
+              className={`h-12 w-12 rounded-full flex justify-center items-center ${
+                currentTab === "upload" ? "bg-orange-main" : "bg-gray-400"
+              }`}
+            >
               <button>
-                <img src={currentTab ? "/svg/home-outlined.svg" : "/svg/plus.svg"} className="h-8" />
+                <img src="/svg/plus.svg" className="h-8" />
               </button>
             </div>
           </a>
