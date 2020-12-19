@@ -8,7 +8,7 @@ const Welcome = () => {
         <div />
         <img src="/svg/ninetales-logo-vertical.svg" className="w-10/12 mx-auto" />
 
-        <div className="flex items-center">
+        <div className="flex justify-stretch items-center">
           <Link href="/register">
             <a>
               <Button variant="contained" className="mr-1">

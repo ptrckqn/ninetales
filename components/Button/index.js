@@ -10,6 +10,8 @@ const Button = ({ variant, handleClick, className = "", children }) => {
     }
   } else if (variant === "muted") {
     classes += "font-bold text-2xl text-white bg-gray-600 rounded py-2 px-6 shadow-lg border-gray-600 border-4";
+  } else if (variant === "small") {
+    classes += "font-bold text-md text-white bg-gray-600 rounded py-1 px-4 shadow-lg border-gray-600 border-4";
   }
 
   return (

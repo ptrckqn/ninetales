@@ -1,5 +1,7 @@
 import { useState } from "react";
 import imageCompression from "browser-image-compression";
+import shortid from "shortid";
+import { storage } from "../firebase/config";
 import Container from "../components/Container";
 import TextField from "../components/TextInput";
 
@@ -29,14 +31,26 @@ const Upload = () => {
   };
 
   const handleSubmit = async () => {
-    const data = new FormData();
-    data.append("file", await imageCompression(file, { maxSizeMB: 1 }));
-    data.append("story", story);
+    const id = shortid.generate();
+    const regex = /(?:\.([^.]+))?$/;
+    const ext = regex.exec(file.name)[1];
+    const compressedImage = await imageCompression(file, { maxSizeMB: 1 });
+
+    const storageRef = storage.ref(`/posts/${id}.${ext}`);
+    await storageRef.put(compressedImage);
+
+    const url = await storageRef.getDownloadURL();
 
     const res = await fetch("/api/upload", {
       method: "POST",
-      body: data,
+      body: JSON.stringify({ id, story, url }),
     });
+
+    if (res.ok) {
+      setFile(null);
+      setStory("");
+      setPreview(null);
+    }
   };
 
   return (
