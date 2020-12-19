@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import imageCompression from "browser-image-compression";
 import Container from "../components/Container";
 import TextField from "../components/TextInput";
 
 const types = ["image/png", "image/jpeg"];
+
+const options = {
+  maxSizeMB: 1,
+};
 
 const Upload = () => {
   const [file, setFile] = useState();
@@ -23,9 +28,15 @@ const Upload = () => {
     }
   };
 
-  const handleSubmit = () => {
-    console.log("file", file);
-    console.log("story", story);
+  const handleSubmit = async () => {
+    const data = new FormData();
+    data.append("file", await imageCompression(file, { maxSizeMB: 1 }));
+    data.append("story", story);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: data,
+    });
   };
 
   return (

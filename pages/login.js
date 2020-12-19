@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { firebase, firestore } from "../firebase/config";
 import TextField from "../components/TextInput";
 import Button from "../components/Button";
 
 const Login = () => {
   const router = useRouter();
   const [form, setForm] = useState({ username: null, password: null });
+  const [error, setError] = useState("");
 
   const handleBack = () => {
     router.back();
@@ -17,10 +19,27 @@ const Login = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, password } = form;
-    alert(`LOG IN WITH ${username} ${password}`);
+
+    const docRef = firestore.collection("users").doc(username.toLowerCase());
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      setError("Invalid username or password.");
+    } else {
+      const { email } = doc.data();
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((err) => {
+          setError("Invalid username or password.");
+        });
+    }
   };
 
   return (
@@ -35,7 +54,7 @@ const Login = () => {
 
       <h2 className="font-bold text-4xl text-white mt-16">Welcome back, we've missed you.</h2>
 
-      <h3 className="font-bold text-2xl text-white mt-8">Let's sign you in.</h3>
+      <h3 className="font-bold text-2xl text-white mt-8">Let's log you in.</h3>
 
       <div className="mt-16 flex flex-col flex-1 items-center z-10">
         <form onSubmit={handleSubmit} className="w-full h-full flex flex-col justify-between">
@@ -57,6 +76,7 @@ const Login = () => {
               gutterBottom
               startIcon="/svg/lock.svg"
             />
+            {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
 
           <Button variant="contained" className="w-full">

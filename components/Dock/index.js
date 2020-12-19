@@ -1,12 +1,15 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { get } from "lodash";
+import { useAuth } from "../../context/authContext";
 
 const Dock = () => {
   const router = useRouter();
+  const auth = useAuth();
 
   const currentTab = useMemo(() => {
-    return router.pathname.split("/")[1];
+    return router.asPath.split("/")[1];
   }, [router]);
 
   return (
@@ -34,10 +37,13 @@ const Dock = () => {
           </a>
         </Link>
 
-        <Link href="/">
+        <Link href={`/${get(auth, "username", "").toLowerCase()}`}>
           <a className="h-8">
             <button>
-              <img src={currentTab === "user" ? "/svg/user-filled.svg" : "/svg/user-outlined.svg"} className="h-8" />
+              <img
+                src={currentTab === get(auth, "username", " ").toLowerCase() ? "/svg/user-filled.svg" : "/svg/user-outlined.svg"}
+                className="h-8"
+              />
             </button>
           </a>
         </Link>

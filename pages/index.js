@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
+import nookies from "nookies";
+import { admin } from "../firebase/admin";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
 import Post from "../components/Post";
-
-const LOGGED_IN = true;
 
 const DUMMY_DATA = [
   {
@@ -33,10 +33,26 @@ const DUMMY_DATA = [
   },
 ];
 
-export default function Home() {
+export const getServerSideProps = async (ctx) => {
+  try {
+    const cookies = nookies.get(ctx);
+    const token = await admin.auth().verifyIdToken(cookies.token);
+
+    const { name } = token;
+
+    return { props: { isLoggedIn: true, posts: [] } };
+  } catch (err) {
+    ctx.res.writeHead(302, { Location: "/welcome" });
+    ctx.res.end();
+
+    return { props: { isLoggedIn: false, posts: [] } };
+  }
+};
+
+export default function Home({ isLoggedIn, posts }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState(posts);
 
   const getPosts = async (refresh = false) => {
     setLoading(true);
@@ -44,20 +60,13 @@ export default function Home() {
     if (refresh) {
       setPosts(DUMMY_DATA);
     } else {
-      setPosts([...posts, DUMMY_DATA]);
+      setPosts([...allPosts, DUMMY_DATA]);
     }
 
     setTimeout(() => setLoading(false), 3000);
   };
 
-  useEffect(() => {
-    if (!LOGGED_IN) {
-      router.push("/welcome");
-      return;
-    }
-
-    getPosts(true);
-  }, []);
+  console.log("allPosts", allPosts);
 
   return (
     <Container>

@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import TextField from "../components/TextInput";
 import Button from "../components/Button";
+import { firebase } from "../firebase/config";
 
 const Register = () => {
   const router = useRouter();
   const [form, setForm] = useState({ name: null, email: null, username: null, password: null });
+  const [error, setError] = useState("");
 
   const handleBack = () => {
     router.back();
@@ -17,10 +19,26 @@ const Register = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, username, password } = form;
-    alert(`REGISTER WITH ${name} ${email} ${username} ${password}`);
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(form),
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.error) {
+        setError(json.error);
+      } else {
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(() => {
+            router.push("/");
+          });
+      }
+    }
   };
 
   return (
@@ -41,9 +59,9 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="w-full h-full flex flex-col justify-between">
           <div>
             <TextField name="name" label="Name" value={form.name || ""} handleChange={handleChange} gutterBottom />
+            <TextField name="username" label="Username" value={form.username || ""} handleChange={handleChange} gutterBottom />
             <TextField name="email" label="Email" value={form.email || ""} handleChange={handleChange} gutterBottom />
 
-            <TextField name="username" label="Username" value={form.username || ""} handleChange={handleChange} gutterBottom />
             <TextField
               type="password"
               name="password"
@@ -52,6 +70,7 @@ const Register = () => {
               handleChange={handleChange}
               gutterBottom
             />
+            {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
 
           <Button variant="contained" className="w-full">

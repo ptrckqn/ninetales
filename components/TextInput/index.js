@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TextInput = ({ type = "text", name, label, handleChange, value, gutterBottom, startIcon, textArea }) => {
+const TextInput = ({ type = "text", autoFocus, name, label, handleChange, value, gutterBottom, startIcon, textArea }) => {
   const [inputType, setInputType] = useState(type);
 
   const isPassword = type === "password";
@@ -27,7 +27,7 @@ const TextInput = ({ type = "text", name, label, handleChange, value, gutterBott
       {textArea ? (
         <textarea name={name} id={name} onChange={handleChange} value={value} className={`${classes} resize-none`} rows={11} />
       ) : (
-        <input type={inputType} name={name} id={name} onChange={handleChange} value={value} className={classes} />
+        <input autoFocus={autoFocus} type={inputType} name={name} id={name} onChange={handleChange} value={value} className={classes} />
       )}
 
       {isPassword && (

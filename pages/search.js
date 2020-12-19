@@ -14,7 +14,7 @@ const Search = () => {
   return (
     <Container showBack noSearch>
       <div className="p-4">
-        <TextField name="search" value={search || ""} handleChange={handleChange} startIcon="/svg/search-2.svg" />
+        <TextField autoFocus name="search" value={search || ""} handleChange={handleChange} startIcon="/svg/search-2.svg" />
       </div>
     </Container>
   );
