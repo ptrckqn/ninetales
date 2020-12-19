@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Nav = ({ showBack, noSearch, handleNext, nextBtn }) => {
+const Nav = ({ showBack, noSearch, handleNext, nextBtn, loading }) => {
   const router = useRouter();
 
   const handleBack = () => {
@@ -30,8 +30,8 @@ const Nav = ({ showBack, noSearch, handleNext, nextBtn }) => {
         {!noSearch && (
           <>
             {nextBtn ? (
-              <button className="text-white font-bold " onClick={handleNext}>
-                {nextBtn}
+              <button className="text-white font-bold " onClick={handleNext} disabled={loading}>
+                {loading ? <img src="/svg/loader.svg" className="animate-spin mr-2 inline h-6 w-6" /> : nextBtn}
               </button>
             ) : (
               <Link href="/search">

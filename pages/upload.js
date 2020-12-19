@@ -1,20 +1,15 @@
 import { useState } from "react";
-import imageCompression from "browser-image-compression";
-import shortid from "shortid";
-import { storage } from "../firebase/config";
+import { uploadPhoto } from "../firebase/functions";
 import Container from "../components/Container";
 import TextField from "../components/TextInput";
 
 const types = ["image/png", "image/jpeg"];
 
-const options = {
-  maxSizeMB: 1,
-};
-
 const Upload = () => {
   const [file, setFile] = useState();
   const [story, setStory] = useState("");
   const [preview, setPreview] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -31,15 +26,8 @@ const Upload = () => {
   };
 
   const handleSubmit = async () => {
-    const id = shortid.generate();
-    const regex = /(?:\.([^.]+))?$/;
-    const ext = regex.exec(file.name)[1];
-    const compressedImage = await imageCompression(file, { maxSizeMB: 1 });
-
-    const storageRef = storage.ref(`/posts/${id}.${ext}`);
-    await storageRef.put(compressedImage);
-
-    const url = await storageRef.getDownloadURL();
+    setLoading(true);
+    const { id, url } = await uploadPhoto(file, "posts");
 
     const res = await fetch("/api/upload", {
       method: "POST",
@@ -51,10 +39,12 @@ const Upload = () => {
       setStory("");
       setPreview(null);
     }
+
+    setLoading(false);
   };
 
   return (
-    <Container showBack nextBtn="Submit" handleNext={handleSubmit}>
+    <Container showBack nextBtn="Submit" handleNext={handleSubmit} loading={loading}>
       <div className="p-4">
         <div className="relative">
           <label className="w-full mb-8 cursor-pointer">
