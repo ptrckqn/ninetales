@@ -110,7 +110,6 @@ const Username = ({ isOwner, user, posts }) => {
     });
 
     if (res.ok) {
-      setPreview(null);
       setFile(null);
       setEditPic(false);
     }
@@ -122,7 +121,7 @@ const Username = ({ isOwner, user, posts }) => {
     <Container>
       <div className="flex justify-center">
         <div className=" relative mt-8 mb-4">
-          <img src={editPic ? preview : user.pic} className=" h-48 w-48 inset-white rounded-full object-cover" />
+          <img src={preview || user.pic} className=" h-48 w-48 inset-white rounded-full object-cover" />
 
           {isOwner && (
             <>
