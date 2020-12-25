@@ -1,17 +1,15 @@
-const Button = ({ variant, handleClick, className = "", children }) => {
-  let classes = "";
+const Button = ({ variant, small, handleClick, className = "", children }) => {
+  let classes = `font-bold rounded ${small ? " text-md py-1 px-4" : " text-2xl py-2 px-6"}`;
 
   if (variant === "contained" || variant === "outlined") {
-    classes += "font-bold text-2xl rounded py-2 px-6 shadow-lg border-orange-main border-4 hover:border-orange-light";
+    classes += " shadow-lg border-orange-main border-4 hover:border-orange-light";
     if (variant === "contained") {
-      classes += " bg-orange-main hover:bg-orange-light text-white";
+      classes += " text-white bg-orange-main hover:bg-orange-light";
     } else {
       classes += " text-orange-main";
     }
   } else if (variant === "muted") {
-    classes += "font-bold text-2xl text-white bg-gray-600 rounded py-2 px-6 shadow-lg border-gray-600 border-4";
-  } else if (variant === "small") {
-    classes += "font-bold text-md text-white bg-gray-600 rounded py-1 px-4 shadow-lg border-gray-600 border-4";
+    classes += " text-white bg-gray-600 shadow-lg border-gray-600 border-4";
   }
 
   return (

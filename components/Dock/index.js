@@ -41,8 +41,12 @@ const Dock = () => {
           <a className="h-8">
             <button>
               <img
-                src={currentTab === get(auth, "username", " ").toLowerCase() ? "/svg/user-filled.svg" : "/svg/user-outlined.svg"}
-                className="h-8"
+                src={get(
+                  auth,
+                  "pic",
+                  currentTab === get(auth, "username", " ").toLowerCase() ? "/svg/user-filled.svg" : "/svg/user-outlined.svg"
+                )}
+                className="h-8 w-8 rounded-full object-cover"
               />
             </button>
           </a>

@@ -1,5 +1,5 @@
-const Loading = ({ small }) => {
-  const dotClasses = `h-2 w-2 bg-gray-400 rounded-full animate-pulse`;
+const Loading = ({ size = 2 }) => {
+  const dotClasses = `h-${size} w-${size} bg-gray-400 rounded-full animate-pulse`;
 
   return (
     <div className="flex justify-center py-2 loading-wrapper">

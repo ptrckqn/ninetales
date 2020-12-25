@@ -22,6 +22,7 @@ export default async (req, res) => {
           name,
           email,
           username,
+          friends: [],
         });
       } else {
         res.status(200).json({ error: "Username is already in use." });

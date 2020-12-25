@@ -11,11 +11,28 @@ export const getServerSideProps = async (ctx) => {
     const token = await admin.auth().verifyIdToken(cookies.token);
 
     const { name } = token;
+
+    const friends = await new Promise((resolve, reject) => {
+      try {
+        firestore
+          .collection("users")
+          .doc(name)
+          .get()
+          .then((doc) => {
+            const { friends } = doc.data();
+            resolve(friends);
+          });
+      } catch (err) {
+        reject(err);
+      }
+    });
+
     const posts = await new Promise((resolve, reject) => {
       try {
         firestore
           .collection("posts")
-          .where("username", "==", name)
+          .where("username", "in", [...friends, name])
+          .orderBy("createdAt", "desc")
           .limit(10)
           .get()
           .then((snapshot) => {
