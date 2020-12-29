@@ -5,12 +5,6 @@ import Head from "next/head";
 import { AuthProvider } from "../context/authContext";
 
 const App = ({ Component, pageProps }) => {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("sw.js");
-    }
-  }, []);
-
   return (
     <>
       <Head>
