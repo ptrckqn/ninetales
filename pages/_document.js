@@ -8,6 +8,7 @@ export default class CustomDocument extends Document {
           <link rel="shortcut icon" href="svg/ninetales-logo.svg" />
           <link rel="apple-touch-icon" href="icons/apple-icon-180.png" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="theme-color" content="#1F2937" />
           <link
             rel="apple-touch-startup-image"
             href="icons/apple-splash-2048-2732.jpg"
@@ -138,6 +139,8 @@ export default class CustomDocument extends Document {
             href="icons/apple-splash-1136-640.jpg"
             media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
           />
+
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
