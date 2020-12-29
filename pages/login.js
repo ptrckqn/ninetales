@@ -86,10 +86,11 @@ const Login = () => {
             />
             {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
-
-          <Button variant="contained" className="w-full">
-            Log in
-          </Button>
+          <div className="safe-bottom">
+            <Button variant="contained" className="w-full">
+              Log in
+            </Button>
+          </div>
         </form>
       </div>
     </div>

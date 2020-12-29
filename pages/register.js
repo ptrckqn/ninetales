@@ -81,9 +81,11 @@ const Register = () => {
             {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
 
-          <Button variant="contained" className="w-full">
-            Register
-          </Button>
+          <div className="safe-bottom">
+            <Button variant="contained" className="w-full">
+              Register
+            </Button>
+          </div>
         </form>
       </div>
     </div>
