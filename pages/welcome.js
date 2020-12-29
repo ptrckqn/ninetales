@@ -1,20 +1,7 @@
-import { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { firebase } from "../firebase/config";
 import Button from "../components/Button";
 
 const Welcome = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        router.push("/");
-      }
-    });
-  }, []);
-
   return (
     <div className="container relative overflow-x-hidden overflow-y-visible h-screen safe-bottom">
       <div className="absolute-center z-20 w-full h-full flex flex-col justify-between items-center p-4">
