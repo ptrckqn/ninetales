@@ -53,6 +53,7 @@ export const getServerSideProps = async (ctx) => {
 
     return { props: { posts } };
   } catch (err) {
+    ctx.res.statusMessage = err;
     ctx.res.writeHead(302, { Location: "/welcome" });
     ctx.res.end();
 
