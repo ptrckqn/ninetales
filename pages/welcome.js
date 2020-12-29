@@ -1,7 +1,12 @@
 import Link from "next/link";
+import { useAuth } from "../context/authContext";
 import Button from "../components/Button";
 
 const Welcome = () => {
+  const auth = useAuth();
+
+  console.log("auth", auth);
+
   return (
     <div className="container relative overflow-x-hidden overflow-y-visible h-screen safe-bottom">
       <div className="absolute-center z-20 w-full h-full flex flex-col justify-between items-center p-4">
