@@ -10,6 +10,10 @@
 @tailwind base;
 @tailwind components;
 
+body {
+  background-color: #1f2937;
+}
+
 .absolute-center {
   position: absolute;
   top: 50%;

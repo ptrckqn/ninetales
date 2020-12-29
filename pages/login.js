@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { firebase, firestore } from "../firebase/config";
 import TextField from "../components/TextInput";
@@ -41,6 +41,14 @@ const Login = () => {
         });
     }
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+  }, []);
 
   return (
     <div className="container flex flex-col overflow-x-hidden h-screen p-4">

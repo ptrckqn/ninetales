@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import TextField from "../components/TextInput";
 import Button from "../components/Button";
@@ -40,6 +40,14 @@ const Register = () => {
       }
     }
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+  }, []);
 
   return (
     <div className="container flex flex-col overflow-x-hidden h-screen p-4">

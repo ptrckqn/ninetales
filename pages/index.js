@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import nookies from "nookies";
+import { useRouter } from "next/router";
 import { admin, firestore } from "../firebase/admin";
+import { firebase } from "../firebase/config";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
 import Post from "../components/Post";
@@ -59,6 +61,7 @@ export const getServerSideProps = async (ctx) => {
 };
 
 export default function Home({ posts }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState(posts);
 
@@ -73,6 +76,14 @@ export default function Home({ posts }) {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        router.push("/welcome");
+      }
+    });
+  }, []);
 
   return (
     <Container>

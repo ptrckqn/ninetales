@@ -1,11 +1,19 @@
+import { useEffect } from "react";
 import Link from "next/link";
-import { useAuth } from "../context/authContext";
+import { useRouter } from "next/router";
+import { firebase } from "../firebase/config";
 import Button from "../components/Button";
 
 const Welcome = () => {
-  const auth = useAuth();
+  const router = useRouter();
 
-  console.log("auth", auth);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+  }, []);
 
   return (
     <div className="container relative overflow-x-hidden overflow-y-visible h-screen safe-bottom">
@@ -13,7 +21,7 @@ const Welcome = () => {
         <div />
         <img src="/svg/ninetales-logo-vertical.svg" className="w-10/12 mx-auto" />
 
-        <div className="flex justify-stretch items-center">
+        <div className="flex justify-stretch items-center safe-bottom">
           <Link href="/register">
             <a>
               <Button variant="contained" className="mr-1">
