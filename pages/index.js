@@ -53,14 +53,11 @@ export const getServerSideProps = async (ctx) => {
 
     return { props: { posts } };
   } catch (err) {
-    ctx.res.writeHead(302, { Location: "/welcome" });
-    ctx.res.end();
-
-    return { props: { posts: [] } };
+    return { props: { posts: [], redirect: true } };
   }
 };
 
-export default function Home({ posts }) {
+export default function Home({ posts, redirect }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState(posts);
@@ -78,11 +75,9 @@ export default function Home({ posts }) {
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        router.push("/welcome");
-      }
-    });
+    if (redirect) {
+      router.push("/welcome");
+    }
   }, []);
 
   return (
