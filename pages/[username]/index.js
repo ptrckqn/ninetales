@@ -80,7 +80,8 @@ export const getServerSideProps = async (ctx) => {
     try {
       firestore
         .collection("posts")
-        .where("username", "==", ctx.params.username)
+        .where("username", "in", [ctx.params.username])
+        .orderBy("createdAt", "desc")
         .limit(10)
         .get()
         .then((snapshot) => {
