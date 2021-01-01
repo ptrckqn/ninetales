@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import TextField from "../components/TextInput";
+import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import { firebase } from "../firebase/config";
 
@@ -58,11 +58,11 @@ const Register = () => {
       <div className="mt-16 flex flex-col flex-1 items-center z-10">
         <form onSubmit={handleSubmit} className="w-full h-full flex flex-col justify-between">
           <div>
-            <TextField name="name" label="Name" value={form.name || ""} handleChange={handleChange} gutterBottom />
-            <TextField name="username" label="Username" value={form.username || ""} handleChange={handleChange} gutterBottom />
-            <TextField name="email" label="Email" value={form.email || ""} handleChange={handleChange} gutterBottom />
+            <TextInput name="name" label="Name" value={form.name || ""} handleChange={handleChange} gutterBottom />
+            <TextInput name="username" label="Username" value={form.username || ""} handleChange={handleChange} gutterBottom />
+            <TextInput name="email" label="Email" value={form.email || ""} handleChange={handleChange} gutterBottom />
 
-            <TextField
+            <TextInput
               type="password"
               name="password"
               label="Password"
@@ -73,7 +73,7 @@ const Register = () => {
             {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
 
-          <div className="safe-bottom">
+          <div className="pb-6">
             <Button variant="contained" className="w-full">
               Register
             </Button>

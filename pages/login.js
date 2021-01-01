@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { firebase, firestore } from "../firebase/config";
-import TextField from "../components/TextInput";
+import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 
 const Login = () => {
@@ -59,7 +59,7 @@ const Login = () => {
       <div className="mt-16 flex flex-col flex-1 items-center z-10">
         <form onSubmit={handleSubmit} className="w-full h-full flex flex-col justify-between">
           <div>
-            <TextField
+            <TextInput
               name="username"
               label="Username"
               value={form.username || ""}
@@ -67,7 +67,7 @@ const Login = () => {
               gutterBottom
               startIcon="/svg/user.svg"
             />
-            <TextField
+            <TextInput
               type="password"
               name="password"
               label="Password"
@@ -78,7 +78,7 @@ const Login = () => {
             />
             {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
-          <div className="safe-bottom">
+          <div className="pb-6">
             <Button variant="contained" className="w-full">
               Log in
             </Button>

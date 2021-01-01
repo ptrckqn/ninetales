@@ -23,7 +23,7 @@ const TextInput = ({ type = "text", autoFocus, name, label, handleChange, value,
       <label htmlFor={name} className="font-bold text-sm text-gray-600 absolute left-4 top-2">
         {label}
       </label>
-      {startIcon && <img src={startIcon} className={`absolute h-6 ${label ? "top-8" : "top-2.5"} left-3`} />}
+      {startIcon && <img src={startIcon} className={`absolute h-6 ${label ? "top-8" : "top-1/2 transform -translate-y-1/2"} left-3`} />}
       {textArea ? (
         <textarea name={name} id={name} onChange={handleChange} value={value} className={`${classes} resize-none`} rows={11} />
       ) : (

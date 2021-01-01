@@ -3,12 +3,12 @@ import Button from "../components/Button";
 
 const Welcome = () => {
   return (
-    <div className="container relative overflow-x-hidden overflow-y-visible h-screen safe-bottom">
+    <div className="container relative overflow-x-hidden overflow-y-visible h-screen">
       <div className="absolute-center z-20 w-full h-full flex flex-col justify-between items-center p-4">
         <div />
         <img src="/svg/ninetales-logo-vertical.svg" className="w-10/12 mx-auto" />
 
-        <div className="flex justify-stretch items-center safe-bottom">
+        <div className="flex justify-stretch items-center pb-6">
           <Link href="/register">
             <a>
               <Button variant="contained" className="mr-1">

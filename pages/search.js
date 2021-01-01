@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { firebase, firestore } from "../firebase/config";
+import { firestore } from "../firebase/config";
 import { useAuth } from "../context/authContext";
 import Container from "../components/Container";
-import TextField from "../components/TextInput";
+import TextInput from "../components/TextInput";
 import Loading from "../components/Loading";
 import Button from "../components/Button";
 
@@ -58,7 +58,7 @@ const Search = () => {
   return (
     <Container showBack noSearch>
       <div className="p-4">
-        <TextField autoFocus name="search" value={search || ""} handleChange={handleChange} startIcon="/svg/search-2.svg" />
+        <TextInput autoFocus name="search" value={search || ""} handleChange={handleChange} startIcon="/svg/search-2.svg" />
         {search ? (
           loading ? (
             <div className="text-center mt-16">

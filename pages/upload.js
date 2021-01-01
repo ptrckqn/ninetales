@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { uploadPhoto } from "../firebase/functions";
 import Container from "../components/Container";
-import TextField from "../components/TextInput";
+import TextInput from "../components/TextInput";
 
 const types = ["image/png", "image/jpeg"];
 
@@ -69,7 +69,7 @@ const Upload = () => {
           </label>
         </div>
 
-        <TextField name="story" label="Story" value={story || ""} handleChange={handleChange} textArea />
+        <TextInput name="story" label="Story" value={story || ""} handleChange={handleChange} textArea />
       </div>
     </Container>
   );

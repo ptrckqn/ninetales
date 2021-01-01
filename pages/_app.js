@@ -21,7 +21,7 @@ const App = ({ Component, pageProps }) => {
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
       </Head>
       <AuthProvider>
-        <div className="min-h-screen safe-top bg-gray-800 relative font-sans">
+        <div className="min-h-screen bg-gray-800 relative font-sans">
           <Component {...pageProps} />
         </div>
       </AuthProvider>
