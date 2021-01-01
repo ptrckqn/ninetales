@@ -42,7 +42,7 @@ const Register = () => {
   };
 
   return (
-    <div className="container flex flex-col overflow-x-hidden h-screen p-4">
+    <div className="container flex flex-col overflow-x-hidden h-screen p-4 safe-top safe-bottom">
       <div className="flex">
         <button className="flex-1" onClick={handleBack}>
           <img src="/svg/chevron-left.svg" className="h-8" />
@@ -73,7 +73,7 @@ const Register = () => {
             {error && <span className="mt-4 text-red-400 block">{error}</span>}
           </div>
 
-          <div className="safe-bottom">
+          <div>
             <Button variant="contained" className="w-full">
               Register
             </Button>

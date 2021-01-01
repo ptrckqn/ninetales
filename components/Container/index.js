@@ -5,7 +5,7 @@ const Container = ({ showBack, handleNext, nextBtn, loading, noSearch, children 
   return (
     <div className="relative container flex flex-col overflow-x-hidden min-h-screen pt-2">
       <Nav showBack={showBack} handleNext={handleNext} nextBtn={nextBtn} noSearch={noSearch} loading={loading} />
-      <main className="mt-11 mb-20 flex-grow h-full">{children}</main>
+      <main className="mt-11 mb-4 safe-top flex-grow h-full">{children}</main>
       <Dock />
     </div>
   );
