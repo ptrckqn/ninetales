@@ -16,7 +16,7 @@ const Nav = ({ showBack, noSearch, handleNext, nextBtn, loading }) => {
   const handleSearch = () => {};
 
   return (
-    <div className="fixed top-0 w-full bg-gray-800  px-4 border-b-2 border-orange-main z-40">
+    <div className="fixed top-0 w-full bg-gray-800  px-4 safe-top border-b-2 border-orange-main z-40">
       <div className="flex justify-between items-center py-2">
         <div className="flex">
           {showBack && (

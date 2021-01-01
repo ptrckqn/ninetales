@@ -18,7 +18,10 @@ const App = ({ Component, pageProps }) => {
       <Head>
         <title>Ninetales</title>
 
-        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <meta
+          name="viewport"
+          content="viewport-fit=cover,width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
       </Head>
       <AuthProvider>
         <div className="min-h-screen bg-gray-800 relative font-sans">
