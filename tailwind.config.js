@@ -23,20 +23,20 @@ module.exports = {
     plugin(function ({ addUtilities }) {
       const newUtilities = {
         ".safe-top": {
-          paddingTop: "constant(safe-area-inset-top)",
-          paddingTop: "env(safe-area-inset-top)",
+          paddingTop: "max(constant(safe-area-inset-top), 0.25rem)",
+          paddingTop: "max(env(safe-area-inset-top), 0.25rem)",
         },
         ".safe-left": {
-          paddingLeft: "constant(safe-area-inset-left)",
-          paddingLeft: "env(safe-area-inset-left)",
+          paddingLeft: "max(constant(safe-area-inset-left), 0.25rem)",
+          paddingLeft: "max(env(safe-area-inset-left), 0.25rem)",
         },
         ".safe-right": {
-          paddingRight: "constant(safe-area-inset-right)",
-          paddingRight: "env(safe-area-inset-right)",
+          paddingRight: "max(constant(safe-area-inset-right), 0.25)",
+          paddingRight: "max(env(safe-area-inset-right), 0.25)",
         },
         ".safe-bottom": {
-          paddingBottom: "constant(safe-area-inset-bottom)",
-          paddingBottom: "env(safe-area-inset-bottom)",
+          paddingBottom: "max(constant(safe-area-inset-bottom), 0.25)",
+          paddingBottom: "max(env(safe-area-inset-bottom), 0.25)",
         },
       };
 
