@@ -1,90 +1,68 @@
-import { useState, useEffect } from "react";
-import nookies from "nookies";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { admin, firestore } from "../firebase/admin";
+import { isEmpty } from "lodash";
 import { firebase } from "../firebase/config";
+import { useAuth } from "../context/authContext";
+import { useGetPosts } from "../hooks/useGetPosts";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
 import Post from "../components/Post";
+import Splash from "../components/Splash";
 
-export const getServerSideProps = async (ctx) => {
-  try {
-    const cookies = nookies.get(ctx);
-    const token = await admin.auth().verifyIdToken(cookies.token);
-
-    const { name } = token;
-
-    const friends = await new Promise((resolve, reject) => {
-      try {
-        firestore
-          .collection("users")
-          .doc(name)
-          .get()
-          .then((doc) => {
-            const { friends } = doc.data();
-            resolve(friends);
-          });
-      } catch (err) {
-        reject(err);
-      }
-    });
-
-    const posts = await new Promise((resolve, reject) => {
-      try {
-        firestore
-          .collection("posts")
-          .where("username", "in", [...friends, name])
-          .orderBy("createdAt", "desc")
-          .limit(10)
-          .get()
-          .then((snapshot) => {
-            const posts = [];
-            snapshot.forEach((doc) => {
-              const { createdAt, story, url, username } = doc.data();
-              posts.push({ id: doc.id, createdAt, story, url, username });
-            });
-
-            resolve(posts);
-          });
-      } catch (err) {
-        reject(err);
-      }
-    });
-
-    return { props: { posts } };
-  } catch (err) {
-    ctx.res.statusMessage = err;
-    ctx.res.writeHead(302, { Location: "/welcome" });
-    ctx.res.end();
-
-    return { props: { posts: [] } };
-  }
-};
-
-export default function Home({ posts }) {
+export default function Home() {
+  const auth = useAuth();
   const router = useRouter();
+  const { getInitialPosts, getMorePosts } = useGetPosts();
+  const [splash, setSplash] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [allPosts, setAllPosts] = useState(posts);
+  const [allPosts, setAllPosts] = useState([]);
+  const [lastPost, setLastPost] = useState();
+  const loadMore = useRef(null);
 
-  const getPosts = async (refresh = false) => {
-    setLoading(true);
+  const fetchPosts = async (refresh) => {
+    const usernames = [auth.username, ...auth.friends];
 
-    // if (refresh) {
-    //   setPosts(DUMMY_DATA);
-    // } else {
-    //   setPosts([...allPosts, DUMMY_DATA]);
-    // }
+    let newLastPost;
+    if (refresh) {
+      const { posts, last } = await getInitialPosts(usernames);
+      setAllPosts(posts);
+      newLastPost = last;
+    } else {
+      console.log("I JUST RAAAAAN");
+      const { posts, last } = await getMorePosts(usernames, lastPost);
+      setAllPosts([...allPosts, posts]);
+      newLastPost = last;
+    }
 
-    setLoading(false);
+    setLastPost(newLastPost);
   };
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         router.push("/welcome");
+      } else {
+        setSplash(false);
       }
     });
+
+    const observer = new IntersectionObserver(() => fetchPosts(false), {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0,
+    });
+    if (loadMore.current) {
+      observer.observe(loadMore.current);
+    }
   }, []);
+
+  useEffect(() => {
+    if (auth && isEmpty(allPosts)) {
+      fetchPosts(true);
+    }
+  }, [auth]);
+
+  if (splash) return <Splash />;
 
   return (
     <Container>
@@ -93,10 +71,14 @@ export default function Home({ posts }) {
           <Loading small />
         </div>
       )}
-      {allPosts &&
-        allPosts.map((post) => {
-          return <Post key={post.id} post={post} />;
-        })}
+      {allPosts && (
+        <>
+          {allPosts.map((post) => {
+            return <Post key={post.id} post={post} />;
+          })}
+          <div ref={loadMore} />
+        </>
+      )}
     </Container>
   );
 }
