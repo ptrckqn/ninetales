@@ -13,6 +13,7 @@ const Post = ({ post: { id, createdAt, story, url, username } }) => {
   });
 
   const paragraphs = useMemo(() => {
+    if (!story) return null;
     return story.split("\n").filter((p) => Boolean(p));
   }, [story]);
 
