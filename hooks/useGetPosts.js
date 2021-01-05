@@ -5,7 +5,7 @@ const PAGE_SIZE = 3;
 
 export const useGetPosts = () => {
   const getInitialPosts = async (usernames) => {
-    if (isNil(usernames) || isEmpty(usernames)) return [];
+    if (isNil(usernames) || isEmpty(usernames)) return { posts: [], last: null };
 
     return await new Promise((resolve, reject) => {
       try {
@@ -31,7 +31,7 @@ export const useGetPosts = () => {
   };
 
   const getMorePosts = async (usernames, lastVisible) => {
-    if (isNil(usernames) || isEmpty(usernames)) return [];
+    if (isNil(usernames) || isEmpty(usernames) || isNil(lastVisible)) return [];
 
     return await new Promise((resolve, reject) => {
       try {

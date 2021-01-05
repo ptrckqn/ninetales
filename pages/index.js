@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
 import { firebase } from "../firebase/config";
@@ -6,8 +6,8 @@ import { useAuth } from "../context/authContext";
 import { useGetPosts } from "../hooks/useGetPosts";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
-import Post from "../components/Post";
 import Splash from "../components/Splash";
+import Posts from "../components/Posts";
 
 export default function Home() {
   const auth = useAuth();
@@ -17,25 +17,28 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [allPosts, setAllPosts] = useState([]);
   const [lastPost, setLastPost] = useState();
-  const loadMore = useRef(null);
 
   const fetchPosts = async (refresh) => {
-    const usernames = [auth.username, ...auth.friends];
+    if (auth) {
+      const usernames = [auth.username, ...auth.friends];
+      let newLastPost;
+      if (refresh) {
+        const { posts, last } = await getInitialPosts(usernames);
+        setAllPosts(posts);
+        newLastPost = last;
+      } else if (!isEmpty(allPosts)) {
+        const { posts, last } = await getMorePosts(usernames, lastPost);
+        if (!isEmpty(posts)) {
+          setAllPosts([...allPosts, ...posts]);
+          newLastPost = last;
+        }
+      }
 
-    let newLastPost;
-    if (refresh) {
-      const { posts, last } = await getInitialPosts(usernames);
-      setAllPosts(posts);
-      newLastPost = last;
-    } else {
-      console.log("I JUST RAAAAAN");
-      const { posts, last } = await getMorePosts(usernames, lastPost);
-      setAllPosts([...allPosts, posts]);
-      newLastPost = last;
+      setLastPost(newLastPost);
     }
-
-    setLastPost(newLastPost);
   };
+
+  const handleLoadMore = useCallback(() => fetchPosts(false), [auth, lastPost]);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -45,19 +48,10 @@ export default function Home() {
         setSplash(false);
       }
     });
-
-    const observer = new IntersectionObserver(() => fetchPosts(false), {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0,
-    });
-    if (loadMore.current) {
-      observer.observe(loadMore.current);
-    }
   }, []);
 
   useEffect(() => {
-    if (auth && isEmpty(allPosts)) {
+    if (isEmpty(allPosts)) {
       fetchPosts(true);
     }
   }, [auth]);
@@ -71,14 +65,7 @@ export default function Home() {
           <Loading small />
         </div>
       )}
-      {allPosts && (
-        <>
-          {allPosts.map((post) => {
-            return <Post key={post.id} post={post} />;
-          })}
-          <div ref={loadMore} />
-        </>
-      )}
+      <Posts posts={allPosts} handleLoadMore={handleLoadMore} />
     </Container>
   );
 }

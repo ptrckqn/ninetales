@@ -2,8 +2,9 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { firestore } from "../../firebase/config";
 
-const Post = ({ post: { id, createdAt, story, url, username } }) => {
+const Post = ({ post: { story, url, username } }) => {
   const userEle = useRef(null);
+  const [loaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const [user, setUser] = useState({
@@ -47,8 +48,9 @@ const Post = ({ post: { id, createdAt, story, url, username } }) => {
   const dotClasses = "bg-white h-2 w-2 rounded-full inline-block";
   return (
     <>
-      <div className="relative w-full max-h-screen-3/4 py-1 bg-white">
-        <img src={url} onClick={handleClick} />
+      <div className={`relative w-full max-h-screen-3/4 py-1 ${loaded ? "bg-white" : "bg-gray-700"}`}>
+        <div className={`w-full h-96 bg-gray-900 animate-pulse ${loaded ? "hidden" : "block"}`} />
+        <img className={`${loaded ? "block" : "hidden"}`} src={url} onClick={handleClick} onLoad={() => setLoaded(true)} />
 
         {/* User Label */}
         <div
@@ -94,7 +96,12 @@ const Post = ({ post: { id, createdAt, story, url, username } }) => {
           <span className="my-4 ml-4 block h-1 w-24 bg-orange-main rounded-full" onClick={handleOpen(false)} />
           <div className="fade-overflow  h-3/4">
             <div className="text-white text-sm overflow-scroll h-full px-4">
-              {paragraphs && paragraphs.map((paragraph) => <p className="mb-6">{paragraph}</p>)}
+              {paragraphs &&
+                paragraphs.map((paragraph, i) => (
+                  <p key={i} className="mb-6">
+                    {paragraph}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
