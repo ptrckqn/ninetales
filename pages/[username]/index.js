@@ -152,7 +152,7 @@ const Username = ({ isOwner, user }) => {
             {isOwner && (
               <>
                 {editPic ? (
-                  <button className="absolute right-0 bottom-0 bg-gray-600 rounded-full p-2" onClick={handleSubmit} disabled={loading}>
+                  <button className="absolute right-0 bottom-0 bg-green-400 rounded-full p-2" onClick={handleSubmit} disabled={loading}>
                     {loading ? (
                       <img src="/svg/loader.svg" className="animate-spin inline h-6 w-6" />
                     ) : (
@@ -167,7 +167,7 @@ const Username = ({ isOwner, user }) => {
                 )}
 
                 {editPic && (
-                  <button className="absolute left-0 bottom-0 bg-gray-600 rounded-full p-2" onClick={handleCancel}>
+                  <button className="absolute left-0 bottom-0 bg-red-400 rounded-full p-2" onClick={handleCancel}>
                     <img src="/svg/cancel.svg" className="h-6 w-6" />
                   </button>
                 )}
