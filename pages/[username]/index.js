@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import nookies from "nookies";
 import Link from "next/link";
 import { admin, firestore } from "../../firebase/admin";
 import { uploadPhoto } from "../../firebase/functions";
 import { firebase } from "../../firebase/config";
-import useRouterRefresh from "../../hooks/useRouterRefresh";
+import { useRouterRefresh } from "../../hooks/useRouterRefresh";
+import { useGetPosts } from "../../hooks/useGetPosts";
 import Container from "../../components/Container";
-import Post from "../../components/Post";
+import Posts from "../../components/Posts";
 import Button from "../../components/Button";
 
 const types = ["image/png", "image/jpeg"];
@@ -76,34 +77,13 @@ export const getServerSideProps = async (ctx) => {
     });
   }
 
-  const posts = await new Promise((resolve, reject) => {
-    try {
-      firestore
-        .collection("posts")
-        .where("username", "in", [ctx.params.username])
-        .orderBy("createdAt", "desc")
-        .limit(10)
-        .get()
-        .then((snapshot) => {
-          const posts = [];
-          snapshot.forEach((doc) => {
-            const { createdAt, story, url, username } = doc.data();
-            posts.push({ id: doc.id, createdAt, story, url, username });
-          });
-
-          resolve(posts);
-        });
-    } catch (err) {
-      reject(err);
-    }
-  });
-
-  return { props: { isOwner, posts, user: { ...user, pic: user.pic || "/svg/user-filled.svg" }, requests } };
+  return { props: { isOwner, user: { ...user, pic: user.pic || "/svg/user-filled.svg" }, requests: requests || [] } };
 };
 
-const Username = ({ isOwner, user, posts, requests }) => {
+const Username = ({ isOwner, user, requests }) => {
   const refresh = useRouterRefresh();
-  const [allPosts, setAllPosts] = useState(posts);
+  const { getInitialPosts } = useGetPosts();
+  const [allPosts, setAllPosts] = useState([]);
   const [editPic, setEditPic] = useState(false);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
@@ -164,6 +144,13 @@ const Username = ({ isOwner, user, posts, requests }) => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      const { posts } = await getInitialPosts([user.username]);
+      setAllPosts(posts);
+    })();
+  });
+
   return (
     <>
       <Container>
@@ -221,10 +208,7 @@ const Username = ({ isOwner, user, posts, requests }) => {
           )}
         </div>
 
-        {allPosts &&
-          allPosts.map((post) => {
-            return <Post key={post.id} post={post} />;
-          })}
+        <Posts posts={allPosts} />
       </Container>
 
       <div

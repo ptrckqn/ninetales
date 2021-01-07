@@ -1,24 +1,24 @@
 import { useRef, useEffect } from "react";
 import Post from "../Post";
 
-const Posts = ({ posts, handleLoadMore }) => {
+const Posts = ({ posts }) => {
   const loadMore = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleLoadMore, {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0,
-    });
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(handleLoadMore, {
+  //     root: null,
+  //     rootMargin: "20px",
+  //     threshold: 1.0,
+  //   });
 
-    if (loadMore.current) {
-      observer.observe(loadMore.current);
-    }
+  //   if (loadMore.current) {
+  //     observer.observe(loadMore.current);
+  //   }
 
-    return () => {
-      if (loadMore.current) observer.unobserve(loadMore.current);
-    };
-  }, [handleLoadMore]);
+  //   return () => {
+  //     if (loadMore.current) observer.unobserve(loadMore.current);
+  //   };
+  // }, [handleLoadMore]);
 
   return (
     <div>

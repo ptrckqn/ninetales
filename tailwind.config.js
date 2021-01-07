@@ -31,12 +31,12 @@ module.exports = {
           paddingLeft: "max(env(safe-area-inset-left), 0.25rem)",
         },
         ".safe-right": {
-          paddingRight: "max(constant(safe-area-inset-right), 0.25)",
-          paddingRight: "max(env(safe-area-inset-right), 0.25)",
+          paddingRight: "max(constant(safe-area-inset-right), 0.25rem)",
+          paddingRight: "max(env(safe-area-inset-right), 0.25rem)",
         },
         ".safe-bottom": {
-          paddingBottom: "max(constant(safe-area-inset-bottom), 0.25)",
-          paddingBottom: "max(env(safe-area-inset-bottom), 0.25)",
+          paddingBottom: "max(constant(safe-area-inset-bottom), 0.25rem)",
+          paddingBottom: "max(env(safe-area-inset-bottom), 0.25rem)",
         },
       };
 

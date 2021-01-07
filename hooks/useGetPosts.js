@@ -1,7 +1,7 @@
 import { isEmpty, isNil } from "lodash";
 import { firestore } from "../firebase/config";
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 199; //TODO: implement pagination and infinite scroll
 
 export const useGetPosts = () => {
   const getInitialPosts = async (usernames) => {
@@ -59,5 +59,3 @@ export const useGetPosts = () => {
 
   return { getInitialPosts, getMorePosts };
 };
-
-export default useGetPosts;

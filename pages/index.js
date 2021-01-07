@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
 import { firebase } from "../firebase/config";
@@ -38,8 +38,6 @@ export default function Home() {
     }
   };
 
-  const handleLoadMore = useCallback(() => fetchPosts(false), [auth, lastPost]);
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
@@ -65,7 +63,7 @@ export default function Home() {
           <Loading small />
         </div>
       )}
-      <Posts posts={allPosts} handleLoadMore={handleLoadMore} />
+      <Posts posts={allPosts} />
     </Container>
   );
 }
