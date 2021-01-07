@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import nookies from "nookies";
 import Link from "next/link";
-import { admin, firestore } from "../../firebase/admin";
+import { admin, firestore as admineFirstore } from "../../firebase/admin";
 import { uploadPhoto } from "../../firebase/functions";
-import { firebase } from "../../firebase/config";
+import { firebase, firestore } from "../../firebase/config";
 import { useRouterRefresh } from "../../hooks/useRouterRefresh";
 import { useGetPosts } from "../../hooks/useGetPosts";
 import Container from "../../components/Container";
@@ -13,7 +13,7 @@ import Button from "../../components/Button";
 const types = ["image/png", "image/jpeg"];
 
 export const getServerSideProps = async (ctx) => {
-  let isOwner, user, requests;
+  let isOwner, user;
   try {
     const cookies = nookies.get(ctx);
     const token = await admin.auth().verifyIdToken(cookies.token);
@@ -27,7 +27,7 @@ export const getServerSideProps = async (ctx) => {
 
   try {
     user = await new Promise((resolve, reject) => {
-      const docRef = firestore.collection("users").doc(ctx.params.username);
+      const docRef = admineFirstore.collection("users").doc(ctx.params.username);
       try {
         docRef.get().then((doc) => {
           if (!doc.exists) {
@@ -50,40 +50,15 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  if (isOwner && user) {
-    requests = await new Promise((resolve, reject) => {
-      firestore
-        .collection("pendingRequests")
-        .where("target", "==", ctx.params.username)
-        .get()
-        .then((snapshot) => {
-          const pending = [];
-          try {
-            snapshot.forEach((doc) => {
-              const id = doc.id;
-              const { source } = doc.data();
-              const sourceRef = firestore.collection("users").doc(source);
-              sourceRef.get().then((doc) => {
-                const { username, name, pic } = doc.data();
-                pending.push({ id, username, name, pic: pic || "/svg/user-filled.svg" });
-              });
-            });
-
-            resolve(pending);
-          } catch (err) {
-            reject(err);
-          }
-        });
-    });
-  }
-
-  return { props: { isOwner, user: { ...user, pic: user.pic || "/svg/user-filled.svg" }, requests: requests || [] } };
+  return { props: { isOwner, user: { ...user, pic: user.pic || "/svg/user-filled.svg" } } };
 };
 
-const Username = ({ isOwner, user, requests }) => {
+const Username = ({ isOwner, user }) => {
   const refresh = useRouterRefresh();
   const { getInitialPosts } = useGetPosts();
+
   const [allPosts, setAllPosts] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [editPic, setEditPic] = useState(false);
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
@@ -146,8 +121,24 @@ const Username = ({ isOwner, user, requests }) => {
 
   useEffect(() => {
     (async () => {
+      // Get posts
       const { posts } = await getInitialPosts([user.username]);
       setAllPosts(posts);
+
+      // Get Requests
+      if (isOwner) {
+        const pending = [];
+        const pendingRequestsRef = await firestore.collection("pendingRequests").where("target", "==", user.username).get();
+
+        for (let pendingRequest of pendingRequestsRef.docs) {
+          const { source } = pendingRequest.data();
+          const sourceRef = await firestore.collection("users").doc(source).get();
+          const { id, username, name, pic } = sourceRef.data();
+          pending.push({ id, username, name, pic: pic || "/svg/user-filled.svg" });
+        }
+
+        setRequests(pending);
+      }
     })();
   });
 
