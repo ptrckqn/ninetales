@@ -1,11 +1,5 @@
-const purgecss = [
-  "@fullhuman/postcss-purgecss",
-  {
-    content: ["./components/**/*.js", "./pages/**/*.js"],
-    defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-  },
-];
+const tailwindcss = require('tailwindcss');
 
 module.exports = {
-  plugins: ["postcss-import", "tailwindcss", "autoprefixer", ...(process.env.NODE_ENV === "production" ? [purgecss] : [])],
+  plugins: [tailwindcss('./tailwind.config.js'), require('autoprefixer')],
 };

@@ -1,18 +1,18 @@
-const plugin = require("tailwindcss/plugin");
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  purge: false,
+  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ["montserrat", "sans-serif"],
-      serif: ["New York Large", "serif"],
+      sans: ['montserrat', 'sans-serif'],
+      serif: ['New York Large', 'serif'],
     },
     extend: {
       colors: {
-        "orange-main": "#F78F32",
-        "orange-light": "#FCBD26",
-        "orange-dark": "F04F2F",
+        'orange-main': '#F78F32',
+        'orange-light': '#FCBD26',
+        'orange-dark': 'F04F2F',
       },
     },
   },
@@ -22,21 +22,21 @@ module.exports = {
   plugins: [
     plugin(function ({ addUtilities }) {
       const newUtilities = {
-        ".safe-top": {
-          paddingTop: "max(constant(safe-area-inset-top), 0.25rem)",
-          paddingTop: "max(env(safe-area-inset-top), 0.25rem)",
+        '.safe-top': {
+          paddingTop: 'max(constant(safe-area-inset-top), 0.25rem)',
+          paddingTop: 'max(env(safe-area-inset-top), 0.25rem)',
         },
-        ".safe-left": {
-          paddingLeft: "max(constant(safe-area-inset-left), 0.25rem)",
-          paddingLeft: "max(env(safe-area-inset-left), 0.25rem)",
+        '.safe-left': {
+          paddingLeft: 'max(constant(safe-area-inset-left), 0.25rem)',
+          paddingLeft: 'max(env(safe-area-inset-left), 0.25rem)',
         },
-        ".safe-right": {
-          paddingRight: "max(constant(safe-area-inset-right), 0.25rem)",
-          paddingRight: "max(env(safe-area-inset-right), 0.25rem)",
+        '.safe-right': {
+          paddingRight: 'max(constant(safe-area-inset-right), 0.25rem)',
+          paddingRight: 'max(env(safe-area-inset-right), 0.25rem)',
         },
-        ".safe-bottom": {
-          paddingBottom: "max(constant(safe-area-inset-bottom), 0.25rem)",
-          paddingBottom: "max(env(safe-area-inset-bottom), 0.25rem)",
+        '.safe-bottom': {
+          paddingBottom: 'max(constant(safe-area-inset-bottom), 0.25rem)',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 0.25rem)',
         },
       };
 
