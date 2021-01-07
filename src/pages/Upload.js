@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/authContext';
+import { useNav } from '../context/navContext';
 import { firestore } from '../firebase';
 import { uploadPhoto } from '../firebase/functions';
-import Container from '../components/Container';
 import TextInput from '../components/TextInput';
 
 const types = ['image/png', 'image/jpeg'];
 
 const Upload = () => {
   const auth = useAuth();
+  const { updateNav, resetNav } = useNav();
   const [file, setFile] = useState();
   const [story, setStory] = useState('');
   const [preview, setPreview] = useState();
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -29,7 +29,7 @@ const Upload = () => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
+    updateNav({ loading: true });
     const { id, url } = await uploadPhoto(file, 'posts');
 
     const docRef = firestore.collection('posts').doc(id);
@@ -45,11 +45,22 @@ const Upload = () => {
     setStory('');
     setPreview(null);
 
-    setLoading(false);
+    updateNav({ loading: false });
   };
 
+  useEffect(() => {
+    updateNav({
+      showBack: true,
+      nextBtn: 'Upload',
+      handleNext: handleSubmit,
+    });
+    return () => {
+      resetNav();
+    };
+  }, []);
+
   return (
-    <Container showBack nextBtn="Submit" handleNext={handleSubmit} loading={loading}>
+    <>
       <div className="p-4">
         <div className="relative">
           <label className="w-full mb-8 cursor-pointer">
@@ -72,7 +83,7 @@ const Upload = () => {
 
         <TextInput name="story" label="Story" value={story || ''} handleChange={handleChange} textArea />
       </div>
-    </Container>
+    </>
   );
 };
 

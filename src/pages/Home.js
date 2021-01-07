@@ -4,9 +4,7 @@ import { isEmpty } from 'lodash';
 import { firebase } from '../firebase';
 import { useAuth } from '../context/authContext';
 import { useGetPosts } from '../hooks/useGetPosts';
-import Container from '../components/Container';
 import Loading from '../components/Loading';
-import Splash from '../components/Splash';
 import Posts from '../components/Posts';
 
 const Home = () => {
@@ -56,17 +54,17 @@ const Home = () => {
     }
   }, [auth]);
 
-  if (splash) return <Splash />;
+  if (splash) return null;
 
   return (
-    <Container>
+    <>
       {loading && (
         <div className="mt-4">
           <Loading small />
         </div>
       )}
       <Posts posts={allPosts} />
-    </Container>
+    </>
   );
 };
 

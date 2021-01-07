@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { firestore } from '../firebase';
 import { useAuth } from '../context/authContext';
-import Container from '../components/Container';
+import { useNav } from '../context/navContext';
 import TextInput from '../components/TextInput';
 import Loading from '../components/Loading';
 import Button from '../components/Button';
 
 const Search = () => {
   const auth = useAuth();
+  const { updateNav, resetNav } = useNav();
   const [search, setSearch] = useState();
   const [loading, setLoading] = useState(false);
   const [foundUser, setFoundUser] = useState();
@@ -41,6 +42,14 @@ const Search = () => {
   };
 
   useEffect(() => {
+    updateNav({ showBack: true, noSearch: true });
+
+    return () => {
+      resetNav();
+    };
+  }, []);
+
+  useEffect(() => {
     if (!loading) {
       setLoading(true);
     }
@@ -55,7 +64,7 @@ const Search = () => {
   }, [search]);
 
   return (
-    <Container showBack noSearch>
+    <>
       <div className="p-4">
         <TextInput autoFocus name="search" value={search || ''} handleChange={handleChange} startIcon="/svg/search-2.svg" />
         {search ? (
@@ -96,7 +105,7 @@ const Search = () => {
           </>
         )}
       </div>
-    </Container>
+    </>
   );
 };
 

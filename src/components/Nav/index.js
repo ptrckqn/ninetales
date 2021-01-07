@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useNav } from '../../context/navContext';
 
-const Nav = ({ showBack, noSearch, handleNext, nextBtn, loading }) => {
+const Nav = () => {
   const history = useHistory();
+  const {
+    navProps: { showBack, handleNext, nextBtn, loading, noSearch },
+  } = useNav();
 
   const handleBack = () => {
     history.goBack();

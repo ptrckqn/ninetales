@@ -87,7 +87,7 @@ const Post = ({ post: { story, url, username } }) => {
           </div>
 
           <span className="my-4 ml-4 block h-1 w-24 bg-orange-main rounded-full" onClick={handleOpen(false)} />
-          <div className="fade-overflow  h-3/4">
+          <div className="h-3/4">
             <div className="text-white text-sm overflow-scroll h-full px-4">
               {paragraphs &&
                 paragraphs.map((paragraph, i) => (

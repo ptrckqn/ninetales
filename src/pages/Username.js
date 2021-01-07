@@ -6,7 +6,6 @@ import { firebase, firestore } from '../firebase';
 import { uploadPhoto } from '../firebase/functions';
 import { useGetPosts } from '../hooks/useGetPosts';
 import { useAuth } from '../context/authContext';
-import Container from '../components/Container';
 import Posts from '../components/Posts';
 import Button from '../components/Button';
 
@@ -139,59 +138,57 @@ const Username = ({ match }) => {
 
   return (
     <>
-      <Container>
-        <div className="flex justify-center">
-          <div className="relative mt-8 mb-4">
-            <img src={preview || user.pic || '/svg/user-filled.svg'} className=" h-48 w-48 inset-white rounded-full object-cover" />
+      <div className="flex justify-center">
+        <div className="relative mt-8 mb-4">
+          <img src={preview || user.pic || '/svg/user-filled.svg'} className=" h-48 w-48 inset-white rounded-full object-cover" />
 
-            {isOwner && (
-              <>
-                {editPic ? (
-                  <button className="absolute right-0 bottom-0 bg-green-400 rounded-full p-2" onClick={handleSubmit} disabled={loading}>
-                    {loading ? <img src="/svg/loader.svg" className="animate-spin inline h-6 w-6" /> : <img src="/svg/check.svg" className="h-6 w-6" />}
-                  </button>
-                ) : (
-                  <label className="cursor-pointer absolute right-0 bottom-0 bg-gray-600 rounded-full p-2">
-                    <img src="/svg/pencil.svg" className="h-6 w-6" />
-                    <input type="file" onChange={handleFile} accept="image/png, image/jpeg" className="hidden" />
-                  </label>
-                )}
-
-                {editPic && (
-                  <button className="absolute left-0 bottom-0 bg-red-400 rounded-full p-2" onClick={handleCancel}>
-                    <img src="/svg/cancel.svg" className="h-6 w-6" />
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
-        <h3 className="font-serif font-bold text-white text-2xl text-center">{user.name}</h3>
-        <h6 className="text-lg text-gray-400 text-center">@{user.username}</h6>
-
-        <div className="p-4">
           {isOwner && (
             <>
-              {requests.length > 0 && (
-                <Button variant="contained" small className="mb-2 w-full" handleClick={handleShowRequests(true)}>
-                  {requests.length} Request{requests.length === 1 ? '' : 's'}
-                </Button>
+              {editPic ? (
+                <button className="absolute right-0 bottom-0 bg-green-400 rounded-full p-2" onClick={handleSubmit} disabled={loading}>
+                  {loading ? <img src="/svg/loader.svg" className="animate-spin inline h-6 w-6" /> : <img src="/svg/check.svg" className="h-6 w-6" />}
+                </button>
+              ) : (
+                <label className="cursor-pointer absolute right-0 bottom-0 bg-gray-600 rounded-full p-2">
+                  <img src="/svg/pencil.svg" className="h-6 w-6" />
+                  <input type="file" onChange={handleFile} accept="image/png, image/jpeg" className="hidden" />
+                </label>
               )}
-              <div className="flex justify-stretch ">
-                {/* <Button variant="muted" small className="mr-1 w-full">
-              Edit
-            </Button> */}
-                <Button variant="muted" small className="w-full" handleClick={handleLogout}>
-                  Log out
-                </Button>
-              </div>
+
+              {editPic && (
+                <button className="absolute left-0 bottom-0 bg-red-400 rounded-full p-2" onClick={handleCancel}>
+                  <img src="/svg/cancel.svg" className="h-6 w-6" />
+                </button>
+              )}
             </>
           )}
         </div>
+      </div>
 
-        <Posts posts={allPosts} />
-      </Container>
+      <h3 className="font-serif font-bold text-white text-2xl text-center">{user.name}</h3>
+      <h6 className="text-lg text-gray-400 text-center">@{user.username}</h6>
+
+      <div className="p-4">
+        {isOwner && (
+          <>
+            {requests.length > 0 && (
+              <Button variant="contained" small className="mb-2 w-full" handleClick={handleShowRequests(true)}>
+                {requests.length} Request{requests.length === 1 ? '' : 's'}
+              </Button>
+            )}
+            <div className="flex justify-stretch ">
+              {/* <Button variant="muted" small className="mr-1 w-full">
+              Edit
+            </Button> */}
+              <Button variant="muted" small className="w-full" handleClick={handleLogout}>
+                Log out
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+
+      <Posts posts={allPosts} />
 
       <div className={`fixed h-screen w-screen left-0 top-0 bg-black bg-opacity-75 grid place-items-center ${showRequests ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={handleShowRequests(false)}>
         <div className="bg-gray-600 w-11/12 max-h-96 overflow-y-auto rounded p-4">
