@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useNav } from '../../context/navContext';
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useNav } from "../../context/navContext";
 
 const Nav = () => {
   const history = useHistory();
   const {
-    navProps: { showBack, handleNext, nextBtn, loading, noSearch },
+    navProps: { showBack, loading, noSearch },
   } = useNav();
 
   const handleBack = () => {
@@ -24,13 +24,14 @@ const Nav = () => {
           <img src="/svg/ninetales-logo.svg" className="h-10" />
         </div>
 
-        {!noSearch && (
+        {loading ? (
+          <img
+            src="/svg/loader.svg"
+            className="animate-spin mr-2 inline h-6 w-6"
+          />
+        ) : (
           <>
-            {nextBtn ? (
-              <button className="text-white font-bold " onClick={handleNext} disabled={loading}>
-                {loading ? <img src="/svg/loader.svg" className="animate-spin mr-2 inline h-6 w-6" /> : nextBtn}
-              </button>
-            ) : (
+            {!noSearch && (
               <Link to="/search">
                 <button>
                   <img src="/svg/search.svg" className="h-8" />

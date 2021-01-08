@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 
-const INIT_NAV = { showBack: false, handleNext: null, nextBtn: null, loading: false, noSearch: false };
+const INIT_NAV = { showBack: false, loading: false, noSearch: false };
 
 const NavContext = createContext(INIT_NAV);
 
@@ -15,7 +15,11 @@ export const NavProvider = ({ children }) => {
     setNavProps(INIT_NAV);
   };
 
-  return <NavContext.Provider value={{ navProps, updateNav, resetNav }}>{children}</NavContext.Provider>;
+  return (
+    <NavContext.Provider value={{ navProps, updateNav, resetNav }}>
+      {children}
+    </NavContext.Provider>
+  );
 };
 
 export const useNav = () => {
