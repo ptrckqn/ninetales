@@ -24,17 +24,19 @@ const App = () => {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/welcome" component={Welcome} />
-            </Switch>
 
-            {/* Auth Routes */}
-            <Container>
-              <Switch>
-                <Route exact path="/search" component={Search} />
-                <Route exact path="/upload" component={Upload} />
-                <Route exact path="/:username" component={Username} />
-                <Route path="/" component={Home} />
-              </Switch>
-            </Container>
+              <Route>
+                <Container>
+                  <Switch>
+                    <Route exact path="/search" component={Search} />
+                    <Route exact path="/upload" component={Upload} />
+                    <Route exact path="/:username" component={Username} />
+                    <Route exact path="/" component={Home} />
+                  </Switch>
+                </Container>
+              </Route>
+              {/* Auth Routes */}
+            </Switch>
           </div>
         </Router>
       </NavProvider>
