@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer, Slide, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+
 import { AuthProvider } from './context/authContext';
 import { NavProvider } from './context/navContext';
 
@@ -39,6 +42,8 @@ const App = () => {
             </Switch>
           </div>
         </Router>
+
+        <ToastContainer limit={1} transition={Slide} position={toast.POSITION.TOP_CENTER} />
       </NavProvider>
     </AuthProvider>
   );

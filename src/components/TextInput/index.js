@@ -22,7 +22,7 @@ const TextInput = ({ type = 'text', autoFocus, name, label, handleChange, value,
         {label}
       </label>
       {startIcon && <img src={startIcon} className={`absolute h-6 ${label ? 'top-8' : 'top-1/2 transform -translate-y-1/2'} left-3`} />}
-      {textArea ? <textarea name={name} id={name} onChange={handleChange} value={value} className={`${classes} resize-none`} rows={11} /> : <input autoFocus={autoFocus} type={inputType} name={name} id={name} onChange={handleChange} value={value} className={classes} />}
+      {textArea ? <textarea name={name} id={name} onChange={handleChange} value={value} className={`${classes} resize-none`} rows={9} /> : <input autoFocus={autoFocus} type={inputType} name={name} id={name} onChange={handleChange} value={value} className={classes} />}
 
       {isPassword && <img onClick={handleViewPassword} src={inputType === 'password' ? '/svg/eye-off.svg' : '/svg/eye-on.svg'} className="absolute top-8 right-3 h-6 cursor-pointer" />}
     </div>

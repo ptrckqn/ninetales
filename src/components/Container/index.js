@@ -6,7 +6,7 @@ const Container = ({ children }) => {
   return (
     <div className="relative container flex flex-col overflow-x-hidden min-h-screen pt-2">
       <Nav />
-      <main className="mt-11 mb-16 safe-top safe-bottom flex-grow h-full">{children}</main>
+      <main className="mt-12 mb-18 safe-top safe-bottom flex-grow h-full">{children}</main>
       <Dock />
     </div>
   );

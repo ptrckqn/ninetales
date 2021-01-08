@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { get, isNil } from 'lodash';
+import { toast } from 'react-toastify';
 import fb from 'firebase';
 import { firebase, firestore } from '../firebase';
 import { uploadPhoto } from '../firebase/functions';
@@ -61,6 +62,7 @@ const Username = ({ match }) => {
       picName: filename,
     });
 
+    toast.success('Profile picture updated');
     setFile(null);
     setEditPic(false);
     setLoading(false);
@@ -86,6 +88,10 @@ const Username = ({ match }) => {
       await targetRef.update({
         friends: fb.firestore.FieldValue.arrayUnion(source),
       });
+
+      toast.success(`Accepted request from ${source}`);
+    } else {
+      toast.warning(`Removed request from ${source}`);
     }
 
     await requestRef.delete();
