@@ -68,6 +68,10 @@ button:focus {
   padding: 0 10px;
 }
 
+.Toastify__toast {
+  border-radius: 0.25rem;
+}
+
 .Toastify__close-button {
   display: none;
 }
