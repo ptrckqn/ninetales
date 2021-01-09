@@ -22,6 +22,7 @@ const App = () => {
       <NavProvider>
         <Router>
           <div className="min-h-screen bg-gray-800 relative font-sans">
+            <button onClick={() => toast('asdfasdfasdf')}>TOAST ME BABY</button>
             <Switch>
               {/* No Auth Routes */}
               <Route exact path="/login" component={Login} />
