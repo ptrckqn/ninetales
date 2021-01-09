@@ -65,6 +65,7 @@ button:focus {
 .Toastify__toast-container {
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
+  padding: 0 10px;
 }
 
 .Toastify__close-button {

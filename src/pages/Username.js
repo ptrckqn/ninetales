@@ -89,9 +89,9 @@ const Username = ({ match }) => {
         friends: fb.firestore.FieldValue.arrayUnion(source),
       });
 
-      toast.success(`Accepted request from ${source}`);
+      toast.success(`Accepted request from @${source}`);
     } else {
-      toast.warning(`Removed request from ${source}`);
+      toast.warning(`Removed request from @${source}`);
     }
 
     await requestRef.delete();
