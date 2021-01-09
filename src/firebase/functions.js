@@ -10,7 +10,7 @@ export const uploadPhoto = async (file, folder) => {
 
   const filename = `${id}.${ext}`;
 
-  const storageRef = storage.ref(`/${folder}/${filename}}`);
+  const storageRef = storage.ref(`/${folder}/${filename}`);
   await storageRef.put(compressedImage);
 
   const url = await storageRef.getDownloadURL();
